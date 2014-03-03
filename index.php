@@ -1,3 +1,119 @@
+<?php
+
+session_start(); 
+//defining vars
+$ufname = "";
+$ulame = ""; 
+$uemail = ""; 
+$upass = ""; 
+$urpass = ""; 
+$utype = ""; 
+$fname_error = "";
+$lame_error = ""; 
+$email_error = "";
+$pass_error = "";
+$rpass_error = "";
+$type_error = "";
+
+
+//the rest of this script only validates form input and encrypts passwords
+
+$formtype = $_POST['form']; 
+
+if(strcmp($formtype, "login")==0){
+	login(); 
+}
+elseif(strcmp($formtype, "register")==0){
+	register(); 
+}
+else{
+	echo '<script>alert{"SOMETHING BAD HAPPENED"}</script>';
+}
+
+function login() { 
+
+}
+
+function register() {	
+	//use global vars
+	global $ufname; 
+	global $ulame; 
+	global $uemail; 
+	global $upass; 
+	global $urpass; 
+	global $utype;
+	global $fname_error; 
+	global $lname_error; 
+	global $email_error; 
+	global $pass_error;
+	global $rpass_error; 
+	global $type_error; 
+
+
+	if(empty($_POST['fname'])){
+		 $fname_error = '<span class="error">First name is Required</span>'; 
+	}
+	else{
+		$ufname = validate($_POST['fname']); 
+	}
+
+	if(empty($_POST['lname'])){
+		$lname_error = '<span class="error">Last name is Required</span>';
+	}
+	else{
+		$ulame = validate($_POST['lname']);
+	}
+
+	if(empty($_POST['email'])){
+		$email_error = '<span class="error">Email is Required</span>';
+	}
+	else{
+		$uemail = validate($_POST['email']); 
+		if(strpos($uemail, "rutgers.edu")==FALSE){
+			$email_error = '<span class="error">Need a valid Rutgers email!</span>'; 
+		}
+	}
+
+	if(empty($_POST['passpass'])){
+		$pass_error = '<span class="error">Password is Required</span>';
+	}
+	else{
+		$upass = validate($_POST['passpass']); 
+	}
+
+	if(empty($_POST['rpassword'])){
+		$rpass_error = '<span class="error">Retyping your password is Required</span>'; 
+	}
+	else{
+		$urpass = validate($_POST['rpassword']); 
+		if(strcmp($upass, $urpass)!=0){
+			$pass_error = $rpass_error = '<span class="error">Passwords do not match</span>'; 	
+		}
+	}
+	
+	$utype = validate($_POST['type']); 
+	
+	if(strcmp($utype, "placeholder")==0){
+		$type_error = '<span class="error">Invalid User Type</span>'; 
+	}
+
+
+/*
+	$_SESSION['fname'] = $ufname; 
+	$_SESSION['lname'] = $ulame; 
+	$_SESSION['email'] = $uemail; 
+	$_SESSION['pass'] = $upass; 
+	$_SESSION['type'] = $utype; 
+ */
+}
+
+function validate($data){
+	$data = trim($data);
+	return $data; 
+}
+// */
+?>
+
 <html>
 	<head>
 		<title>StudyMe - Get Paid to Get Studied</title>
@@ -17,25 +133,27 @@
 	<body>
 		<header>
 		<h1>Study Me: Get Paid to Get Studied</h1>
-			<form id="login" action="login.php" method="post">
+		<form id="login" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+				<input class="hidden" name="form" value="login">
 				<input class="logger" type="email" placeholder="Email"  name="lemail"><br>
 				<input class="logger" type="password" placeholder="Password" name="fastpass"><br>
 				<input id="lsubton" type="submit" value="Log In">
 			</form>
 		</header>
 		<div id="loginsec">
-			<form id="register" action="register.php" method="post">
-				<input class="formtext" placeholder="First Name" type="text" name="fname"><br>
-				<input class="formtext" placeholder="Last Name" type="text" name="lname"><br>
-				<input class="formtext" placeholder="Email" type="email" name="email"><br>
-				<input class="formtext" placeholder="Password" type="password" name="passpass"><br>
-				<input class="formtext" placeholder="Re-type Password" type="password" name="rpassword"><br>
-				<select id="options"  name="type">
-					<option id="ph" value="placeholder">User Type</option>
+		<form id="register" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">	
+			<input class="hidden" name="form" value="register">
+			<input class="formtext" placeholder="First Name" type="text" name="fname"> * <?php echo $fname_error;?><br>
+			<input class="formtext" placeholder="Last Name" type="text" name="lname"> * <?php echo $lname_error; ?><br>
+			<input class="formtext" placeholder="Email" type="email" name="email"> * <?php echo $email_error; ?><br>
+			<input class="formtext" placeholder="Password" type="password" name="passpass"> * <?php echo $pass_error; ?><br>
+			<input class="formtext" placeholder="Re-type Password" type="password" name="rpassword"> * <?php echo $rpass_error; ?><br>
+			<select id="options"  name="type">
+					<option id="ph" value="placeholder">User Type</option> 
 					<option value="student">Student</option>
 					<option value="researcher">Researcher</option>
-				</select><br>
-				<input class="formbutton" type="submit" value="Register">
+					</select>* <?php echo $type_error; ?><br>
+				<input class="formbutton" type="submit" value="Register">&nbsp;&nbsp;&nbsp;
 			</form>
 		</div>
 		<footer>

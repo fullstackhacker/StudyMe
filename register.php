@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 //database info
 $server = "localhost"; 
 $username = "root";
@@ -23,5 +25,7 @@ if(!mysqli_query($con, $query)){
 echo "<br>Registered Successfully!<br>";
 
 mysqli_close($con);
+
+header( "refresh:5;url='user.php'" ); 
 
 ?>
