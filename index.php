@@ -26,9 +26,6 @@ if(strcmp($formtype, "login")==0){
 elseif(strcmp($formtype, "register")==0){
 	register(); 
 }
-else{
-	echo '<script>alert{"SOMETHING BAD HAPPENED"}</script>';
-}
 
 function login() { 
 
@@ -98,13 +95,13 @@ function register() {
 	}
 
 
-/*
 	$_SESSION['fname'] = $ufname; 
 	$_SESSION['lname'] = $ulame; 
 	$_SESSION['email'] = $uemail; 
 	$_SESSION['pass'] = $upass; 
 	$_SESSION['type'] = $utype; 
- */
+
+	header("Location: register.php"); 
 }
 
 function validate($data){

@@ -14,9 +14,13 @@ $con = mysqli_connect($server, $username, $password, $database);
 //check connection
 if(mysqli_connect_errno()){
 	echo "Failed to connect to sql server<br>"; 
-}	
+}
 
-$query = "INSERT INTO $table (firstname, lastname, email, password, usertype) VALUES ('$_POST[fname]','$_POST[lname]','$_POST[email]', 'dick' ,'$_POST[type]');";
+$user->fname = $_SESSION['fname']; 
+$user->lname = $_SESSION['lname']; 
+$user->email = $_SESSION['email']; 
+$user->passw = $_SESSION['pass']; 
+$user->utype = $_SESSION['type']; 
 
 if(!mysqli_query($con, $query)){
 	die('ERROR ' . mysqli_error($con));
