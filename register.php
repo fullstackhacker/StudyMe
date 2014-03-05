@@ -22,14 +22,17 @@ $user->email = $_SESSION['email'];
 $user->passw = $_SESSION['pass']; 
 $user->utype = $_SESSION['type']; 
 
+$query = "INSERT INTO '$table' (firstname, lastname, email, pass, type) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', '$user->utype');";
+
 if(!mysqli_query($con, $query)){
 	die('ERROR ' . mysqli_error($con));
-}
 
-echo "<br>Registered Successfully!<br>";
+}
 
 mysqli_close($con);
 
-header( "refresh:5;url='user.php'" ); 
+echo "<br>Registered Successfully!<br>";
+
+header( "refresh:3;url='user.php'" ); 
 
 ?>

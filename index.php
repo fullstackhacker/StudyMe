@@ -14,10 +14,11 @@ $email_error = "";
 $pass_error = "";
 $rpass_error = "";
 $type_error = "";
+$lemail_error = ""; 
+$lpass_error = "";
 
 
 //the rest of this script only validates form input and encrypts passwords
-
 $formtype = $_POST['form']; 
 
 if(strcmp($formtype, "login")==0){
@@ -28,6 +29,36 @@ elseif(strcmp($formtype, "register")==0){
 }
 
 function login() { 
+	//use global vars
+	global $uemail; 
+	global $upass;
+	global $lemail_error = ""; 
+	global $lpass_error = ""; 
+	$valid = true;
+
+	//validate the inputs to make sure they're not evil
+	if(empty($_POST['empty'])){
+		$lemail_error = "Must enter a valid email"; 
+		$valid = false;
+	else {
+		$uemail = validate($_POST['lemail'];
+	}
+
+	if(empty($_POST['fastpass'])){
+		$lpass_error = "Must enter a password"; 
+		$valid = false; 
+	}
+	else{ 
+		$upass = validate($_POST['fastpass']; 
+	}
+
+	//if all inputs are *possible* valid inputs
+	if($valid == true{ 
+		//store these in the session
+		$_SESSION['email'] = $uemail; 
+		$_SESSION['pass'] = $upass; 
+		header('Location: login.php');
+	}
 
 }
 
@@ -45,10 +76,12 @@ function register() {
 	global $pass_error;
 	global $rpass_error; 
 	global $type_error; 
+	$valid = true;
 
-
+	//check if the first name spot is empty
 	if(empty($_POST['fname'])){
-		 $fname_error = '<span class="error">First name is Required</span>'; 
+		$fname_error = '<span class="error">First name is Required</span>'; 
+		$valid = false; 
 	}
 	else{
 		$ufname = validate($_POST['fname']); 
@@ -56,6 +89,7 @@ function register() {
 
 	if(empty($_POST['lname'])){
 		$lname_error = '<span class="error">Last name is Required</span>';
+		$valid = false; 
 	}
 	else{
 		$ulame = validate($_POST['lname']);
@@ -63,16 +97,19 @@ function register() {
 
 	if(empty($_POST['email'])){
 		$email_error = '<span class="error">Email is Required</span>';
+		$valid = false; 
 	}
 	else{
 		$uemail = validate($_POST['email']); 
 		if(strpos($uemail, "rutgers.edu")==FALSE){
 			$email_error = '<span class="error">Need a valid Rutgers email!</span>'; 
+			$valid = false; 
 		}
 	}
 
 	if(empty($_POST['passpass'])){
 		$pass_error = '<span class="error">Password is Required</span>';
+		$valid = false; 
 	}
 	else{
 		$upass = validate($_POST['passpass']); 
@@ -80,11 +117,13 @@ function register() {
 
 	if(empty($_POST['rpassword'])){
 		$rpass_error = '<span class="error">Retyping your password is Required</span>'; 
+		$valid = false; 
 	}
 	else{
 		$urpass = validate($_POST['rpassword']); 
 		if(strcmp($upass, $urpass)!=0){
 			$pass_error = $rpass_error = '<span class="error">Passwords do not match</span>'; 	
+			$valid = false; 
 		}
 	}
 	
@@ -92,20 +131,24 @@ function register() {
 	
 	if(strcmp($utype, "placeholder")==0){
 		$type_error = '<span class="error">Invalid User Type</span>'; 
+		$valid = false; 
 	}
+	
+	//if all inputs are *possible* inputs
+	if($valid == true){
+		$_SESSION['fname'] = $ufname; 
+		$_SESSION['lname'] = $ulame; 
+		$_SESSION['email'] = $uemail; 
+		$_SESSION['pass'] = $upass; 
+		$_SESSION['type'] = $utype; 
 
-
-	$_SESSION['fname'] = $ufname; 
-	$_SESSION['lname'] = $ulame; 
-	$_SESSION['email'] = $uemail; 
-	$_SESSION['pass'] = $upass; 
-	$_SESSION['type'] = $utype; 
-
-	header("Location: register.php"); 
+		header("Location: register.php"); 
+	}
 }
 
 function validate($data){
 	$data = trim($data);
+	$data = htmlspecialchars($data); 
 	return $data; 
 }
 // */
