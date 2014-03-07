@@ -11,6 +11,7 @@ $table = "Users";
 //connect to the database
 $con = mysqli_connect($server, $username, $password, $database); 
 
+
 //check connection
 if(mysqli_connect_errno()){
 	echo "Failed to connect to sql server<br>"; 
@@ -22,17 +23,25 @@ $user->email = $_SESSION['email'];
 $user->passw = $_SESSION['pass']; 
 $user->utype = $_SESSION['type']; 
 
+session_destroy();
+
 $query = "INSERT INTO " . $table . "(firstname, lastname, email, password, usertype) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', '$user->utype');";
 
 if(!mysqli_query($con, $query)){
 	die('ERROR ' . mysqli_error($con));
 
 }
-
 mysqli_close($con);
 
-echo "<br>Registered Successfully!<br>";
+session_start();
 
-header( "refresh:3;url='user.php'" ); 
+$_SESSION['firstname'] = $user->fname; 
+$_SESSION['lastname'] = $user->lname; 
+$_SESSION['email'] = $user->email; 
+$_SESSION['usertype'] = $user->utype;
 
+
+echo "Registered Successfully!<br>";
+
+header( "refresh:2;url='user.php'" ); 
 ?>
