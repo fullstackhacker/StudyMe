@@ -17,7 +17,6 @@ $type_error = "";
 $lemail_error = ""; 
 $lpass_error = "";
 
-
 //the rest of this script only validates form input and encrypts passwords
 $formtype = $_POST['form']; 
 
@@ -32,16 +31,16 @@ function login() {
 	//use global vars
 	global $uemail; 
 	global $upass;
-	global $lemail_error = ""; 
-	global $lpass_error = ""; 
+	global $lemail_error;
+	global $lpass_error; 
 	$valid = true;
-
 	//validate the inputs to make sure they're not evil
-	if(empty($_POST['empty'])){
+	if(empty($_POST['lemail'])){
 		$lemail_error = "Must enter a valid email"; 
 		$valid = false;
+	}
 	else {
-		$uemail = validate($_POST['lemail'];
+		$uemail = validate($_POST['lemail']);
 	}
 
 	if(empty($_POST['fastpass'])){
@@ -49,17 +48,17 @@ function login() {
 		$valid = false; 
 	}
 	else{ 
-		$upass = validate($_POST['fastpass']; 
+		$upass = validate($_POST['fastpass']); 
 	}
 
+
 	//if all inputs are *possible* valid inputs
-	if($valid == true{ 
+	if($valid == true){ 
 		//store these in the session
 		$_SESSION['email'] = $uemail; 
 		$_SESSION['pass'] = $upass; 
 		header('Location: login.php');
 	}
-
 }
 
 function register() {	
@@ -148,6 +147,7 @@ function register() {
 
 function validate($data){
 	$data = trim($data);
+	//$data = stripslashes($data); 
 	$data = htmlspecialchars($data); 
 	return $data; 
 }

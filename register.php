@@ -22,7 +22,7 @@ $user->email = $_SESSION['email'];
 $user->passw = $_SESSION['pass']; 
 $user->utype = $_SESSION['type']; 
 
-$query = "INSERT INTO '$table' (firstname, lastname, email, pass, type) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', '$user->utype');";
+$query = "INSERT INTO " . $table . "(firstname, lastname, email, password, usertype) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', '$user->utype');";
 
 if(!mysqli_query($con, $query)){
 	die('ERROR ' . mysqli_error($con));
