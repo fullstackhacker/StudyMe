@@ -31,7 +31,7 @@ session_destroy();
 					$("#review").fadeTo("fast", 0.3);
 					$("#questions").fadeTo("fast", 0.3);
 					$("#settings").fadeTo("fast", 0.3);
-					$("#createbox").fadeIn(1000);
+					$("#createbox").fadeIn();
 					$("#reviewbox").fadeOut(); 
 					$("#questionbox").fadeOut(); 
 					$("#settingbox").fadeOut();
@@ -42,7 +42,7 @@ session_destroy();
 					$("#questions").fadeTo("fast", 0.3); 
 					$("#settings").fadeTo("fast", 0.3); 
 					$("#createbox").fadeOut(); 
-					$("#reviewbox").fadeIn(1000); 
+					$("#reviewbox").fadeIn(); 
 					$("#questionbox").fadeOut(); 
 					$("#settingbox").fadeOut(); 
 				});
@@ -53,7 +53,7 @@ session_destroy();
 					$("#settings").fadeTo("fast", 0.3);
 					$("#createbox").fadeOut(); 
 					$("#reviewbox").fadeOut(); 
-					$("#questionbox").fadeIn(1000); 
+					$("#questionbox").fadeIn(); 
 					$("#settingbox").fadeOut(); 
 				});
 				$("#settings").click(function(){
@@ -64,7 +64,7 @@ session_destroy();
 					$("#createbox").fadeOut(); 
 					$("#reviewbox").fadeOut(); 
 					$("#questionbox").fadeOut();
-					$("#settingbox").fadeIn(1000); 
+					$("#settingbox").fadeIn(); 
 				});
 			});
 		</script>
@@ -82,7 +82,16 @@ session_destroy();
 				<li id="settings" class="tab"><a href="#settings">Settings</a></li>
 			</ul>
 			<div id="createbox" class="box start">
-				createbox
+				<form id="createstudy" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+					<input class="hidden" name="form" value="createform">
+					<input placeholder="Name of Study" type="text" name="studyname" ><br>
+					<input placeholder="Reseacher" type="text" name="studyreseacher" ><br>
+					<input placeholder="Funding" type="text" name="studyfunding"><br>
+					<input placeholder="Date" type="text" name="studydate"><br>
+					<input placeholder="Time" type="text" name="studytime"><br>
+					<select placeholder="Questionaires" name="studyquestions">
+					</select><br>
+				</form>
 			</div>
 			<div id="reviewbox" class="box">
 				review box
