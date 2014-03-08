@@ -53,8 +53,14 @@ echo $row[2] . "<br>";
 $_SESSION['firstname'] = $row[0]; 
 $_SESSION['lastname'] = $row[1]; 
 $_SESSION['email'] = $row[2];
-$_SESSION['usertype'] = $row[4];
 
-header('Location: user.php');
+if(strcmp($row[4], "student")==0){
+	header('Location: student.php');
+elseif(strcmp($row[4], "researcher")==0){
+	header('Location: researcher.php'); 
+}
+else{
+	die("Unfortunate error. Submit a bug to: admin@rustudy.me");
+}
 
 ?>

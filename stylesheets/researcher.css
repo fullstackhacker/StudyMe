@@ -1,0 +1,25 @@
+body {
+	font-family: 'Gafata', sans-serif; 
+}
+
+.tab {
+	display: inline;
+	color: red;
+	background: black; 
+	opacity: 0.3;
+}
+
+a { 
+	color: red; 
+	text-decoration: none;
+}
+
+.box { 
+	display:none;
+}
+
+.start {
+	display: inline;
+	opacity: 1.0;
+}
+

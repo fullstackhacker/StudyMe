@@ -40,10 +40,14 @@ session_start();
 $_SESSION['firstname'] = $user->fname; 
 $_SESSION['lastname'] = $user->lname; 
 $_SESSION['email'] = $user->email; 
-$_SESSION['usertype'] = $user->utype;
 
 
-echo "Registered Successfully!<br>";
 
-header( "refresh:2;url='user.php'" ); 
+if(strcmp($user->utype, "student")==0){
+	echo "Registered Successfully!<br>";
+	header( "refresh:2;url='student.php'" ); 
+}
+elseif(strcmp($user->type, "researcher")==0){
+	echo "We will email you when your account has been verified"; 
+	header('Location: index.php');
 ?>
