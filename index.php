@@ -1,4 +1,5 @@
 <?php
+require('scrypt.php');
 
 session_start(); 
 //defining vars
@@ -50,7 +51,6 @@ function login() {
 	else{ 
 		$upass = validate($_POST['fastpass']); 
 	}
-
 
 	//if all inputs are *possible* valid inputs
 	if($valid == true){ 
@@ -125,6 +125,7 @@ function register() {
 			$valid = false; 
 		}
 	}
+
 	
 	$utype = validate($_POST['type']); 
 	
@@ -135,10 +136,11 @@ function register() {
 	
 	//if all inputs are *possible* inputs
 	if($valid == true){
+		$encrypt = Password::hash($upass);
 		$_SESSION['fname'] = $ufname; 
 		$_SESSION['lname'] = $ulame; 
 		$_SESSION['email'] = $uemail; 
-		$_SESSION['pass'] = $upass; 
+		$_SESSION['pass'] = $encrypt; 
 		$_SESSION['type'] = $utype; 
 
 		header("Location: register.php"); 

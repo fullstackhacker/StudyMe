@@ -1,4 +1,6 @@
 <?php
+require('scrypt.php');
+
 session_start(); 
 
 //database info
@@ -18,26 +20,29 @@ if(mysqli_connect_errno()){
 
 //get user's email and pass
 $email = $_SESSION['email']; 
-$password = $_SESSION['pass']; 
+$lpassword = $_SESSION['pass']; 
 
 session_destroy();
 
-$query = "SELECT *  FROM ". $table ." WHERE Users.email = '$email';";
+$query = "SELECT * FROM ". $table ." WHERE Users.email = '$email';";
 
-echo $query;
+echo $query . "<br>";
 
+//query the database
 $result = mysqli_query($con, $query); 
-
-mysqli_close($con);
-
-$row = mysqli_fetch_array($result); 
-
-echo $row . "<br><br>";
-
-if(strcmp($password, $row['password']) != 0){ 
-	die('ERROR: INVALID PASSWORD');
+if($result->num_rows == 0){
 	header('Location: index.php');
 }
+
+//get the array. password is stored in array location 3
+$row = mysqli_fetch_array($result);
+
+//check if the password inputted matches the hash
+if(!Password::check($lpassword, $row[3])){
+	echo "scrypt is gay";
+}
+
+mysqli_close($con);
 
 session_start();
 

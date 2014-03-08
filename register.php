@@ -25,6 +25,8 @@ $user->utype = $_SESSION['type'];
 
 session_destroy();
 
+echo $user->passw;
+
 $query = "INSERT INTO " . $table . "(firstname, lastname, email, password, usertype) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', '$user->utype');";
 
 if(!mysqli_query($con, $query)){
