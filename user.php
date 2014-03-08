@@ -1,24 +1,21 @@
 <?php 
-
 session_start();
-/*
 $user->firstname = $_SESSION['firstname']; 
 $user->lastname = $_SESSION['lastname'];
 $user->email  = $_SESSION['email']; 
 $user->usertype = $_SESSION['usertype'];
 
 session_destroy();
- */
 ?>
 
 <html>
 	<head>
-		<title><?php //echo $user->firstname; ?> gets PAID</title>
+		<title><?php echo $user->firstname; ?> gets PAID</title>
 		<!--meta tags-->	
 		<meta charset="UTF-8">
 		<meta name="author" content="Mushaheed Kapadia">
 		<meta name="keywords" content="rutgers paid studies">
-		<meta name="description" content="<?php echo user->firstname; ?> is getting paid to get studied.">
+		<meta name="description" content="<?php echo $user->firstname; ?> is getting paid to get studied.">
 		<!--javascript & jquery-->
 		<script src="scripts/jquery-2.1.0.min.js"></script>
 		<script src="scripts/user.js"></script>

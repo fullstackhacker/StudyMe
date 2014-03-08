@@ -46,10 +46,14 @@ mysqli_close($con);
 
 session_start();
 
-$_SESSION['firstname'] = $row['firstname']; 
-$_SESSION['lastname'] = $row['lastname']; 
-$_SESSION['email'] = $row['email'];
-$_SESSION['usertype'] = $row['usertype'];
+echo $row[0] . "<br>";
+echo $row[1] . "<br>";
+echo $row[2] . "<br>"; 
+
+$_SESSION['firstname'] = $row[0]; 
+$_SESSION['lastname'] = $row[1]; 
+$_SESSION['email'] = $row[2];
+$_SESSION['usertype'] = $row[4];
 
 header('Location: user.php');
 
