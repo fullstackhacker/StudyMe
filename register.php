@@ -6,7 +6,8 @@ $server = "localhost";
 $username = "root";
 $password = "ToPsea906";
 $database = "studyme";
-$table = "Users";
+$studenttable = "Students";
+$reseachertable = "Reseachers";
 
 //connect to the database
 $con = mysqli_connect($server, $username, $password, $database); 
@@ -25,14 +26,19 @@ $user->utype = $_SESSION['type'];
 
 session_destroy();
 
-echo $user->passw;
-
-$query = "INSERT INTO " . $table . "(firstname, lastname, email, password, usertype) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', '$user->utype');";
-
-if(!mysqli_query($con, $query)){
-	die('ERROR ' . mysqli_error($con));
-
+if(strcmp($user->utype, "student")==0){
+	$studentquery = "INSERT INTO " . $studenttable . "(firstname, lastname, email, password, usertype) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', '$user->utype');";
+	if(!mysqli_query($con, $studentquery)){
+		die('ERROR ' . mysqli_error($con));
+	}
 }
+elseif(strcmp($user->utype, "reseacher")==0){
+	$researcherquery = "INSERT INTO " . $reseachertable . "(firstname, lastname, emal, password, validated) VALUES ('$user->fname', '$user->lname', '$user->email', '$user->passw', 'false');";
+	if(!mysqli_query($con, $researcherquery)){
+		die('ERROR ' . mysqli_error($con)); 
+	}
+}
+
 mysqli_close($con);
 
 session_start();
