@@ -1,5 +1,35 @@
 <?php
+
 //researcher will need moderator confrimation
+
+$formtype = $_POST['form'];
+
+//global vars for create study
+//form inputs
+$studyname = ""; 
+$studyresearcher = "";
+$studyfunding = ""; 
+$studystartdate = ""; 
+$studyenddate = ""; 
+$studystarttime = "";
+$studyendtime = "";
+$studyquestion = ""; 
+//form errors
+$studyname_error = ""; 
+$studyresearcher_error = "";
+$studyfunding_error = ""; 
+$studystartdate_error = "";
+$studyenddate_error = ""; 
+$studystarttime_error = ""; 
+$studyendtime_error = ""; 
+
+//global vars for questionairre
+
+
+//if the researcher wants to create a study
+if(strcmp($formtype, "createstudy")==0){
+	createstudy(); 
+}
 
 //start the session 
 session_start(); 
@@ -11,6 +41,71 @@ $user->email = $_SESSION['email'];
 
 //destroy the session
 session_destroy();
+
+
+function createstudy(){ 
+	//form inputs
+	global $studyname; 
+	global $studyresearcher; 
+	global $studyfunding; 
+	global $studystartdate; 
+	global $studyenddate; 
+	global $studystarttime; 
+	global $studyendtime; 
+	//form errors
+	global $studyname_error; 
+	global $studyresearcher_error; 
+	global $studyfunding_error; 
+	global $studystartdate_error; 
+	global $studyenddate_error; 
+	global $studystarttime_error; 
+	global $studyendtime_error; 
+
+	$valid = true; //valid form identifier
+
+	//validate study name 
+	if(!(empty($_POST['studyname']))){
+		$studyname = validate($_POST['studyname']); 
+	}
+	else{
+		$studyname_error = "Name of Study is required"; 
+		$valid = false; 	
+	}
+	
+	//validate study reseacher	
+	if(!(empty($_POST['studyresearcher']))){
+		$studyreseacher = validate($_POST['studyresearcher']); 
+	}
+	else{ 
+		$studyresearcher_error = "Researcher name is required"; 
+		$valid = false; 
+	}
+
+	//validate study funding 
+	if(!(empty($_POST['studyfunding']))){
+		$studyfunding = validate($_POST['studyfunding']); 
+	}
+	else{
+		$studyfunding_error = "You can put 0 if you do not wish to disclose this amount";
+		$valid = false; 
+	}
+
+	//validate start date 
+	if(!(empty($_POST['studystartdate']))){
+		$studystartdate = $_POST['studystartdate']; 
+	}
+	else{
+		$studystartdate_error = "Please enter valid start date"; 
+		$valid = false; 
+	}
+
+	//validate end date
+	//validate start time 
+	//validate end time 
+
+
+
+}
 ?>
 
 <html>
@@ -32,38 +127,38 @@ session_destroy();
 					$("#questions").fadeTo("fast", 0.3);
 					$("#settings").fadeTo("fast", 0.3);
 					$("#createbox").fadeIn();
-					$("#reviewbox").fadeOut(); 
-					$("#questionbox").fadeOut(); 
-					$("#settingbox").fadeOut();
+					$("#reviewbox").hide(); 
+					$("#questionbox").hide(); 
+					$("#settingbox").hide();
 				});
 				$("#review").click(function(){
 					$("#create").fadeTo("fast", 0.3); 
 					$("#review").fadeTo("fast", 1.0); 
 					$("#questions").fadeTo("fast", 0.3); 
 					$("#settings").fadeTo("fast", 0.3); 
-					$("#createbox").fadeOut(); 
+					$("#createbox").hide(); 
 					$("#reviewbox").fadeIn(); 
-					$("#questionbox").fadeOut(); 
-					$("#settingbox").fadeOut(); 
+					$("#questionbox").hide(); 
+					$("#settingbox").hide(); 
 				});
 				$("#questions").click(function(){
 					$("#create").fadeTo("fast", 0.3); 
 					$("#review").fadeTo("fast", 0.3); 
 					$("#questions").fadeTo("fast", 1.0); 
 					$("#settings").fadeTo("fast", 0.3);
-					$("#createbox").fadeOut(); 
-					$("#reviewbox").fadeOut(); 
+					$("#createbox").hide(); 
+					$("#reviewbox").hide(); 
 					$("#questionbox").fadeIn(); 
-					$("#settingbox").fadeOut(); 
+					$("#settingbox").hide(); 
 				});
 				$("#settings").click(function(){
 					$("#create").fadeTo("fast", 0.3); 
 					$("#review").fadeTo("fast", 0.3);
 					$("#questions").fadeTo("fast", 0.3); 
 					$("#settings").fadeTo("fast", 1.0); 
-					$("#createbox").fadeOut(); 
-					$("#reviewbox").fadeOut(); 
-					$("#questionbox").fadeOut();
+					$("#createbox").hide(); 
+					$("#reviewbox").hide(); 
+					$("#questionbox").hide();
 					$("#settingbox").fadeIn(); 
 				});
 			});
@@ -83,14 +178,17 @@ session_destroy();
 			</ul>
 			<div id="createbox" class="box start">
 				<form id="createstudy" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-					<input class="hidden" name="form" value="createform">
-					<input placeholder="Name of Study" type="text" name="studyname" ><br>
-					<input placeholder="Reseacher" type="text" name="studyreseacher" ><br>
-					<input placeholder="Funding" type="text" name="studyfunding"><br>
-					<input placeholder="Date" type="text" name="studydate"><br>
-					<input placeholder="Time" type="text" name="studytime"><br>
+					<input class="hidden" name="form" value="createstudy">
+					<input placeholder="Name of Study" type="text" name="studyname" value="<?php echo $studyname; ?>">* <?php $studyname_error;?><br>
+					<input placeholder="Reseacher" type="text" class="forminput" name="studyreseacher" value="<?php echo $studyresearcher;?>" >* <?php $studyresearcher_error; ?><br>
+					<input placeholder="Funding" type="text" class="forminput" name="studyfunding" value="<?php echo $studyfunding;?>" ><br>
+					<label>Start Date: </label><input placeholder="Start Date" type="date" name="studystartdate" value="<?php echo $studystartdate;?>">* <?php echo $studystartdate_error; ?><br>
+					<label>End Date: </label><input placeholder="End Date" type="date" name="studyenddate" value="<?php echo $studyenddate;?>">* <?php echo $studyenddate_error; ?><br>
+					<label>Start Time: </label><input placeholder="Start Time" type="time" name="studystarttime" value="<?php echo $studystarttime; ?>">* <?php echo $studystarttime_error; ?><br>
+					<label>End Time: </label><input placeholder="End Date" type="time" name="studyendtime" value="<?php echo $studyendtime; ?>">* <?php $studyendtime_error; ?><br>
 					<select placeholder="Questionaires" name="studyquestions">
 					</select><br>
+					<input type="submit" value="submit">
 				</form>
 			</div>
 			<div id="reviewbox" class="box">
