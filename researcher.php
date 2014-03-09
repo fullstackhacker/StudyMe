@@ -23,28 +23,28 @@ $studystartdate_error = "";
 $studyenddate_error = ""; 
 $studystarttime_error = ""; 
 $studyendtime_error = ""; 
-$studyquestionairre_error = "" 
-
+$studyquestionairre_error = "";
 
 //global vars for questionairre
+	
+//start the session 
+session_start(); 
 
+$user->firstname = $_SESSION['firstname']; 
+$user->lastname = $_SESSION['lastname'];
+$user->email = $_SESSION['email']; 
+//get user info
+
+//destroy the session
+session_destroy();
 
 //if the researcher wants to create a study
 if(strcmp($formtype, "createstudy")==0){
 	createstudy(); 
 }
-
-//start the session 
-session_start(); 
-
-//get user info
-$user->firstname = $_SESSION['firstname']; 
-$user->lastname = $_SESSION['lastname'];
-$user->email = $_SESSION['email']; 
-
-//destroy the session
-session_destroy();
-
+elseif(strcmp($formtype, "createquestionairre")==0){
+	createquestionairre();
+}	
 
 function createstudy(){ 
 	//form inputs
@@ -130,8 +130,6 @@ function createstudy(){
 	}
 	
 	//additional details
-	if(){}
-	else{}
 
 	if($valid){
 		//create a session
@@ -145,6 +143,7 @@ function createstudy(){
 		$_SESSION['studyenddate'] = $studyenddate; 
 		$_SESSION['studystarttime'] = $studystarttime; 
 		$_SESSION['studyendtime'] = $studyendtime; 
+		$_SESSION['studyquestionairreid'] = $studyquestionairre; 
 	
 		//save the study
 		header('Location: createstudy.php'); 
