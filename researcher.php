@@ -2,6 +2,7 @@
 
 //researcher will need moderator confrimation
 
+//type of form
 $formtype = $_POST['form'];
 
 //global vars for create study
@@ -22,6 +23,8 @@ $studystartdate_error = "";
 $studyenddate_error = ""; 
 $studystarttime_error = ""; 
 $studyendtime_error = ""; 
+$studyquestionairre_error = "" 
+
 
 //global vars for questionairre
 
@@ -125,6 +128,27 @@ function createstudy(){
 		$studyendtime_error = "Please enter a valid end time"; 
 		$valid = false; 
 	}
+	
+	//additional details
+	if(){}
+	else{}
+
+	if($valid){
+		//create a session
+		session_start();
+		
+		//create session vars		
+		$_SESSION['studyname'] = $studyname;
+		$_SESSION['studyreseacher'] = $studyresearcher; 
+		$_SESSION['studyfunding'] = $studyfunding; 
+		$_SESSION['studystartdate'] = $studystartdate;
+		$_SESSION['studyenddate'] = $studyenddate; 
+		$_SESSION['studystarttime'] = $studystarttime; 
+		$_SESSION['studyendtime'] = $studyendtime; 
+	
+		//save the study
+		header('Location: createstudy.php'); 
+	}
 }
 
 function validate($data){
@@ -132,6 +156,8 @@ function validate($data){
 	$data = stripslashers($data); 
 	$data = htmlspecialchar($data); 
 	return $data; 
+}
+//*/
 ?>
 
 <html>
@@ -195,8 +221,7 @@ function validate($data){
 		<link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
-		<div id="drawer">
-			<ul id="bartab">
+		<div id="drawer"> <ul id="bartab">
 				<li id="create" class="tab start"><a href="#createbox">Create Study</a></li>
 				<li id="review" class="tab"><a href="#reviewbox">Review Studies</a></li>
 				<li id="questions" class="tab"><a href="#questions">Questionairres</a></li>
@@ -212,8 +237,9 @@ function validate($data){
 					<label>End Date: </label><input placeholder="End Date" type="date" name="studyenddate" value="<?php echo $studyenddate;?>">* <?php echo $studyenddate_error; ?><br>
 					<label>Start Time: </label><input placeholder="Start Time" type="time" name="studystarttime" value="<?php echo $studystarttime; ?>">* <?php echo $studystarttime_error; ?><br>
 					<label>End Time: </label><input placeholder="End Date" type="time" name="studyendtime" value="<?php echo $studyendtime; ?>">* <?php $studyendtime_error; ?><br>
+					<textarea name="additionaldetails" form="createstudy" rows=15 cols=40 ><?php if(empty($studydetails)){ echo "Additional details";} else{ echo $studydetails; } ?></textarea><br>
 					<select placeholder="Questionaires" name="studyquestions">
-					</select><br>
+					</select>* <?php echo $studyquestionairre_error; ?><br>
 					<input type="submit" value="submit">
 				</form>
 			</div>
