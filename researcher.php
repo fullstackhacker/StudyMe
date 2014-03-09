@@ -125,8 +125,13 @@ function createstudy(){
 		$studyendtime_error = "Please enter a valid end time"; 
 		$valid = false; 
 	}
-
 }
+
+function validate($data){
+	$data = trim($data); 
+	$data = stripslashers($data); 
+	$data = htmlspecialchar($data); 
+	return $data; 
 ?>
 
 <html>
