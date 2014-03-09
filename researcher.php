@@ -100,10 +100,31 @@ function createstudy(){
 	}
 
 	//validate end date
+	if(!(empty($_POST['studyenddate']))){
+		$studyenddate =  $_POST['studyenddate']; 
+	}
+	else{
+		$studyenddate_error = "Please enter a  valid end date"; 
+		$valid = false; 
+	}
+
 	//validate start time 
+	if(!(empty($_POST['studystartime']))){
+		$studystarttime = $_POST['studystartime']; 
+	}
+	else{
+		$studystartime_error = "Please enter a valid start time";
+		$valid = false; 
+	}
+
 	//validate end time 
-
-
+	if(!(empty($_POST['studyendtime']))){
+		$studyendtime = $_POST['studyendtime']; 
+	}
+	else{ 
+		$studyendtime_error = "Please enter a valid end time"; 
+		$valid = false; 
+	}
 
 }
 ?>
