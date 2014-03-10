@@ -24,8 +24,7 @@ $studystartdate_error = "";
 $studyenddate_error = ""; 
 $studystarttime_error = ""; 
 $studyendtime_error = ""; 
-$studyquestionairre_error = "";
-
+$studyquestionairre_error = ""; 
 //global vars for questionairre
 	
 //start the session 
@@ -131,6 +130,15 @@ function createstudy(){
 	}
 	
 	//additional details
+	if(!(empty($_POST['studydetails']))){
+		$studydetails = validate($_POST['studydetails']); 
+	}
+	else{
+		$studydetails = null; 
+	}
+
+	//get the questionaire id
+	$studyquestionairre = $_POST['studyquestions']; 
 
 	if($valid){
 		//create a session
