@@ -1,5 +1,6 @@
 <?php
 
+//check if valid?
 //researcher will need moderator confrimation
 
 //type of form
