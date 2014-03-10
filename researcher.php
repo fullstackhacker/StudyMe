@@ -16,6 +16,7 @@ $studyenddate = "";
 $studystarttime = "";
 $studyendtime = "";
 $studyquestion = ""; 
+$studydetails = "";
 //form errors
 $studyname_error = ""; 
 $studyresearcher_error = "";
@@ -55,6 +56,8 @@ function createstudy(){
 	global $studyenddate; 
 	global $studystarttime; 
 	global $studyendtime; 
+	global $studyquestionairre;
+	global $studydetails;
 	//form errors
 	global $studyname_error; 
 	global $studyresearcher_error; 
@@ -153,6 +156,7 @@ function createstudy(){
 		$_SESSION['studystarttime'] = $studystarttime; 
 		$_SESSION['studyendtime'] = $studyendtime; 
 		$_SESSION['studyquestionairreid'] = $studyquestionairre; 
+		$_SESSION['studydetails'] = $studydetails;
 	
 		//save the study
 		header('Location: createstudy.php'); 
