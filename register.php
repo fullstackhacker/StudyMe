@@ -3,8 +3,8 @@ session_start();
 
 //database info
 $server = "localhost"; 
-$username = "root";
-$password = "ToPsea906";
+$username = "";
+$password = "";
 $database = "studyme";
 $studenttable = "Students";
 $reseachertable = "Reseachers";
